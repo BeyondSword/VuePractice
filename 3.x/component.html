@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<!-- 点击加 -->
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <!-- <link rel="stylesheet" href="styles/demo.css" /> -->
+</head>
+
+<body>
+    <div id="counter">
+        <button @click="add()">喜加一</button>
+        <label>计数器: {{ counter }}</label>
+    </div>
+
+    <div id="booker">
+        <label>有几本书： {{publishedBooksMessage}}</label>
+    </div>
+
+    <div id="yesorno">
+        <input v-model="question">
+        <label>{{ answer }}</label>
+        <img v-bind:src="imagePath">
+    </div>
+</body>
+
+
+<script src="https://unpkg.com/vue@next"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+<script src="component.js"></script>
+
+</html>
