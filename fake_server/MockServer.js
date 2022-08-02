@@ -14,13 +14,19 @@ function addHead(res) {
 app.use('/',function(req, res) {
     addHead(res);
     res.json(Mock.mock({
-        'status': 200,
-        'dataSource|1-9':[{
-            'key|+1': 1,
-            'title|1':['肆无忌惮', '称王称霸', '那个男人'],
-            'content|1': ['这是博客内容', 'this is blog content', '疑信参半 却无比期盼', '你的惯犯 圆满', '别让纠缠 显得 孤单'],
-            'mockAction|1': ['下载', '试听', '喜欢']
-        }]
+        'code': 200,
+        'result': {
+            'records|5':[{
+                'key|+1': 1,
+                'title|1':['肆无忌惮', '称王称霸', '那个男人'],
+                // 'content|1': ['这是博客内容', 'this is blog content', '疑信参半 却无比期盼', '你的惯犯 圆满', '别让纠缠 显得 孤单'],
+                'intro|1': ['下载', '试听', '喜欢'],
+                'viewCount|1-10000': 10000,
+                'likeCount|1-10000': 10000,
+                'commentCount|1-10000': 10000
+            }],
+            'total': 5,
+        },
     }))
 });
 

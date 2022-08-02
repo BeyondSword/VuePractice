@@ -89,6 +89,8 @@ export default defineComponent({
         title: state.searchKey,
         status: 1,
       });
+
+      console.log("res", res);
       state.dataSource = res.result.records;
       state.pagination.total = res.result.total;
       state.isLoading = false;
