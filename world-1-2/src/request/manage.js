@@ -1,5 +1,7 @@
 import { service } from './http';
 
+// 封装通用的一些请求
+
 export function getAction(url, params) {
     return service({
         url,

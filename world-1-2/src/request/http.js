@@ -7,9 +7,10 @@
  import { postAction } from "@/request/manage";
 
  const service = axios.create({
-     baseURL: process.env.VUE_APP_API_BASE_URL,
-     // baseURL: "http://120.76.216.29:8089/tuma-boot",
-     timeout: 30000000
+    //  baseURL: process.env.VUE_APP_API_BASE_URL,
+    // baseURL: "http://120.76.216.29:8089/tuma-boot",
+    baseURL: "http://localhost:8090",
+    timeout: 30000000
  })
  // 请求拦截器
  service.interceptors.request.use(

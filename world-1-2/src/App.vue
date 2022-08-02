@@ -1,35 +1,58 @@
-<script setup lang="ts">
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-// import HelloWorld from './components/HelloWorld.vue'
-import Sider from './components/sider.vue'
-import layout from './components/layout.vue'
-</script>
-
 <template>
-  <Sider></Sider>
-  <layout></layout>
-  <!-- <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div> -->
-  <!-- <HelloWorld msg="Vite + Vue" /> -->
+  <router-view v-slot="{ Component }">
+    <keep-alive>
+      <transition :name="route.meta.transition">
+        <component :is="Component" v-if="route.meta.keepAlive" />
+      </transition>
+    </keep-alive>
+    <transition :name="route.meta.transition">
+      <component :is="Component" v-if="!route.meta.keepAlive" />
+    </transition>
+  </router-view>
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
+<script>
+import { onMounted } from "vue";
+import { useRoute } from "vue-router";
+export default {
+  name: "App",
+  components: {},
+  setup() {
+    const route = useRoute();
+
+    onMounted(() => {
+    //   document.getElementById("app").style.display = "block";
+    //   document.getElementById("loading_container").style.display = "none";
+    });
+
+    return {
+      route,
+    };
+  },
+};
+</script>
+
+<style lang="less">
+#app {
+  width: 100%;
+  height: 100%;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #2c3e50;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease 0s;
 }
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.fade-leave-from,
+.fade-enter-to {
+  opacity: 1;
 }
 </style>

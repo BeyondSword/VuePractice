@@ -99,7 +99,7 @@ import {
   onMounted,
 } from "vue";
 import { useRouter, useRoute } from "vue-router";
-// import { useStore } from "vuex";
+import { useStore } from "vuex";
 import {
   ArrowUpOutlined,
   MenuOutlined,
@@ -122,7 +122,7 @@ export default defineComponent({
   setup() {
     const router = useRouter();
     const route = useRoute();
-    // const store = useStore();
+    const store = useStore();
     const menuList = router.getRoutes().filter((item) => item.meta.isMenu);
     const state = reactive({
       menuList,
@@ -139,10 +139,11 @@ export default defineComponent({
       initBreadcrumbList();
     });
 
+    //控制面包屑导航
     watch(
       () => route.path,
       () => {
-        initBreadcrumbList();
+        // initBreadcrumbList();
       }
     );
 
@@ -152,6 +153,8 @@ export default defineComponent({
         .getRoutes()
         .filter((item) => item.meta.isBreadcrumb)
         .filter((item) => item.path == route.path);
+
+      //面包屑导航过滤
       if (breadcrumbList[0].path !== "/home") {
         breadcrumbList.unshift(menuList.find((item) => item.path == "/home"));
       }

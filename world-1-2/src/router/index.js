@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
+
+// 注册前端路由  看路由元信息
 const routes = [
     {
         path: '/login',
@@ -39,10 +41,11 @@ const routes = [
         meta: {
         },
         redirect: '/home',
-        component: () => import('@/layout/basicLayout'),
+        component: () => import('@/layouts/layout.vue'),
+        // 嵌套路由
         children: [
             {
-                path: '/home',
+                path: 'home',
                 name: 'home',
                 meta: {
                     title: '主页',
@@ -52,10 +55,10 @@ const routes = [
                     keepAlive: false,
                     transition: 'fade',
                 },
-                component: () => import('@/views/home/home'),
+                component: () => import('@/views/home/home.vue'),
             },
             {
-                path: '/category',
+                path: 'category',
                 name: 'category',
                 meta: {
                     title: '分类',
@@ -68,7 +71,7 @@ const routes = [
                 component: () => import('@/views/category/category'),
             },
             {
-                path: '/categoryAll',
+                path: 'categoryAll',
                 name: 'categoryAll',
                 meta: {
                     title: '分类',
@@ -81,7 +84,7 @@ const routes = [
                 component: () => import('@/views/category/categoryAll'),
             },
             {
-                path: '/tags',
+                path: 'tags',
                 name: 'tags',
                 meta: {
                     title: '标签',
@@ -94,7 +97,7 @@ const routes = [
                 component: () => import('@/views/tags/tags'),
             },
             {
-                path: '/tagsAll',
+                path: 'tagsAll',
                 name: 'tagsAll',
                 meta: {
                     title: '标签',
@@ -107,7 +110,7 @@ const routes = [
                 component: () => import('@/views/tags/tagsAll'),
             },
             {
-                path: '/archive',
+                path: 'archive',
                 name: 'archive',
                 meta: {
                     title: '归档',
@@ -120,7 +123,7 @@ const routes = [
                 component: () => import('@/views/archive/archive'),
             },
             {
-                path: '/user',
+                path: 'user',
                 name: 'user',
                 meta: {
                     title: '关于',
@@ -133,7 +136,7 @@ const routes = [
                 component: () => import('@/views/user/user'),
             },
             {
-                path: '/article',
+                path: 'article',
                 name: 'article',
                 meta: {
                     title: '详情',
@@ -146,7 +149,7 @@ const routes = [
                 component: () => import('@/views/article/article'),
             },
             {
-                path: '/search',
+                path: 'search',
                 name: 'search',
                 meta: {
                     title: '搜索',
