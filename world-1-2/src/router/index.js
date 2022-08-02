@@ -68,7 +68,7 @@ const routes = [
                     keepAlive: false,
                     transition: 'fade'
                 },
-                component: () => import('@/views/category/category'),
+                component: () => import('@/views/category/category.vue'),
             },
             {
                 path: 'categoryAll',
@@ -81,7 +81,7 @@ const routes = [
                     keepAlive: false,
                     transition: 'fade'
                 },
-                component: () => import('@/views/category/categoryAll'),
+                component: () => import('@/views/category/categoryAll.vue'),
             },
             {
                 path: 'tags',
@@ -94,7 +94,7 @@ const routes = [
                     keepAlive: false,
                     transition: 'fade'
                 },
-                component: () => import('@/views/tags/tags'),
+                component: () => import('@/views/tags/tags.vue'),
             },
             {
                 path: 'tagsAll',
@@ -107,7 +107,7 @@ const routes = [
                     keepAlive: false,
                     transition: 'fade'
                 },
-                component: () => import('@/views/tags/tagsAll'),
+                component: () => import('@/views/tags/tagsAll.vue'),
             },
             {
                 path: 'archive',
@@ -120,7 +120,7 @@ const routes = [
                     keepAlive: false,
                     transition: 'fade'
                 },
-                component: () => import('@/views/archive/archive'),
+                component: () => import('@/views/archive/archive.vue'),
             },
             {
                 path: 'user',
@@ -133,7 +133,7 @@ const routes = [
                     keepAlive: false,
                     transition: 'fade'
                 },
-                component: () => import('@/views/user/user'),
+                component: () => import('@/views/user/user.vue'),
             },
             {
                 path: 'article',
@@ -146,7 +146,7 @@ const routes = [
                     keepAlive: false,
                     transition: 'fade'
                 },
-                component: () => import('@/views/article/article'),
+                component: () => import('@/views/article/article.vue'),
             },
             {
                 path: 'search',
@@ -159,7 +159,7 @@ const routes = [
                     keepAlive: false,
                     transition: 'fade'
                 },
-                component: () => import('@/views/search/search'),
+                component: () => import('@/views/search/search.vue'),
             },
         ]
     },

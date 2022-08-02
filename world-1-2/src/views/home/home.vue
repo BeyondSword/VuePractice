@@ -101,6 +101,7 @@ export default defineComponent({
       getArticleList();
     };
 
+    // 等价于<router-link :to="...">
     const handleGoArticle = (item) => {
       router.push({ path: "/article", query: { id: item.id } });
     };

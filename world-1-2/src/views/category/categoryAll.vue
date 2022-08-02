@@ -4,7 +4,7 @@
       <a-collapse-panel
         v-for="(category, index) in categoryList"
         :key="index"
-        :header="`${category.name}（${category.articleCount}）`"
+        :header="`${category.name}${category.articleCount}`"
       >
         <template v-if="category.loading" #extra
           ><LoadingOutlined style="transition: all 0.3s; color: #555555"
@@ -68,10 +68,12 @@ export default defineComponent({
     const getCategoryList = async () => {
       const res = await getAction("/blog/category/list", {});
       state.categoryList = res.result;
+      console.log(state.categoryList);
     };
 
     //获取文章列表
     const getArticleList = async (categoryId) => {
+      console.log(state.categoryList);
       const targetCategory = state.categoryList.find(
         (item) => item.id == categoryId
       );
