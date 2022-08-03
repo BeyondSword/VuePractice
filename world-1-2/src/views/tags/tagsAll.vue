@@ -1,3 +1,4 @@
+<!-- 自己实现了分类标签, 自带动画效果 -->
 <template>
   <div class="page_content">
     <div class="box_wrap">
@@ -35,6 +36,7 @@ export default {
     const getTagList = async () => {
       const res = await getAction("/blog/tag/list", {});
       state.tagList = res.result;
+      console.log("tagList:", state.tagList);
     };
 
     const handleTagChange = (item) => {

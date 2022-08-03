@@ -1,7 +1,8 @@
 import { service } from './http';
 
-// 封装通用的一些请求
+// 封装通用的请求
 
+//GET
 export function getAction(url, params) {
     return service({
         url,
@@ -10,6 +11,7 @@ export function getAction(url, params) {
     })
 }
 
+//POST
 export function postAction(url, params) {
     return service({
         url,
@@ -18,6 +20,7 @@ export function postAction(url, params) {
     })
 }
 
+//PUT
 export function putAction(url, params) {
     return service({
         url,
@@ -26,6 +29,7 @@ export function putAction(url, params) {
     })
 }
 
+//DELETE
 export function deleteAction(url, params) {
     return service({
         url,
@@ -43,6 +47,7 @@ export function httpAction(url, params, method, headers) {
     })
 }
 
+//FORM 表单提交
 export function formDataAction(url, data) {
     return service({
         url,

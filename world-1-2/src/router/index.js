@@ -75,7 +75,7 @@ const routes = [
                 name: 'categoryAll',
                 meta: {
                     title: '分类',
-                    isMenu: true,
+                    isMenu: true, //决定侧边栏（sider）显示
                     isBreadcrumb: true,
                     isAuth: true,
                     keepAlive: false,

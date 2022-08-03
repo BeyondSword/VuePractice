@@ -1,10 +1,11 @@
+<!-- TODO: bug: 合上唯一一类时会报错, activeKey undefined -->
 <template>
   <div class="page_content">
     <a-collapse ghost accordion :bordered="false" v-model:activeKey="activeKey">
       <a-collapse-panel
         v-for="(category, index) in categoryList"
         :key="index"
-        :header="`${category.name}${category.articleCount}`"
+        :header="`${category.name}(${category.articleCount})`"
       >
         <template v-if="category.loading" #extra
           ><LoadingOutlined style="transition: all 0.3s; color: #555555"
@@ -56,9 +57,15 @@ export default defineComponent({
       getCategoryList();
     });
 
+    //监听activeKey
     watch(
       () => state.activeKey,
       (val) => {
+        console.log("val", val);
+        //收起唯一一个列表时会导致 activeKey 返回 undefined.
+        if (typeof val == 'undefined') {
+          return;
+        }
         const categoryId = state.categoryList[val]?.id;
         getArticleList(categoryId);
       }
@@ -68,15 +75,16 @@ export default defineComponent({
     const getCategoryList = async () => {
       const res = await getAction("/blog/category/list", {});
       state.categoryList = res.result;
-      console.log(state.categoryList);
+      console.log("state.categoryList", state.categoryList);
     };
 
     //获取文章列表
     const getArticleList = async (categoryId) => {
-      console.log(state.categoryList);
+      // console.log(state.categoryList);
       const targetCategory = state.categoryList.find(
         (item) => item.id == categoryId
       );
+      console.log("targetCategory", targetCategory);
       targetCategory.loading = true;
       const res = await getAction("/blog/article/list", {
         categoryId,
@@ -84,6 +92,7 @@ export default defineComponent({
       });
       targetCategory.articleList = res.result;
       targetCategory.loading = false;
+      console.log("targetCategory.articleList", targetCategory.articleList);
     };
 
     const handleGoArticle = (item) => {

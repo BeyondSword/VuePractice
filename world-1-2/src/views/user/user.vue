@@ -1,7 +1,7 @@
 <template>
   <div class="page_content">
-    <a-card title="简历" style="width: 100%" :bordered="false" size="small">
-      我叫凃锦东，一名开发者，现在专注于前端部分内容开发。
+    <a-card title="关于" style="width: 100%" :bordered="false" size="small">
+      基于 Vue3 + ant-design-vue 的页面开发
     </a-card>
     <div class="white_space"></div>
     <a-card

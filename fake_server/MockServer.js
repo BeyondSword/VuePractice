@@ -10,16 +10,16 @@ prepare = (req, res) => {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, accessToken, token, x-access-token",);
 }
 
+//按页查询文章  pageSize pageNo title status
 app.use('/blog/article/pageListWithTags',function(req, res) {
     prepare(req, res);
     res.json(Mock.mock({
         'code': 200,
         'result': {
-            'records|5':[{
+            'records|10':[{
                 'key|+1': 1,
-                'title|1':['肆无忌惮', '称王称霸', '那个男人'],
-                // 'content|1': ['这是博客内容', 'this is blog content', '疑信参半 却无比期盼', '你的惯犯 圆满', '别让纠缠 显得 孤单'],
-                'intro|1': ['下载', '试听', '喜欢'],
+                'title':'@csentence',
+                'intro|1': '@cparagraph',
                 'viewCount|1-10000': 10000,
                 'likeCount|1-10000': 10000,
                 'commentCount|1-10000': 10000
@@ -29,23 +29,46 @@ app.use('/blog/article/pageListWithTags',function(req, res) {
     }))
 });
 
-
+//获取分类 参数无
 app.use('/blog/category/list',function(req, res) {
     prepare(req, res);
     res.json(Mock.mock({
         'code': 200,
-        'result':[{
+        'result|10':[{
                 "id|+1": 0,
                 'name': "@cword(3,5)",
-                'articleCount': "",
-                'articleList|3': [{
-                    'title': '@word',
-                    'createTime':'@date'
-                }]
+                'articleCount|1-10': 10,
+                'loading': true
         }]
     }))
 });
 
+//获取标签分类 参数无
+app.use('/blog/tag/list',function(req, res) {
+    prepare(req, res);
+    res.json(Mock.mock({
+        'code': 200,
+        'result|10':[{
+                "id|+1": 0,
+                'name': "@cword(3,5)",
+                'articleCount|1-10': 10,
+        }]
+    }))
+});
+
+//获取文章列表 参数 categoryId | 无参数获取所有文章
+app.use('/blog/article/list',function(req, res) {
+    prepare(req, res);
+    res.json(Mock.mock({
+        'code': 200,
+        'result|1-10': [{
+            'title': '@csentence',
+            'createTime':'@date'
+        }]
+    }))
+});
+
+//获取分类 pageNo:   pageSize:
 app.use('/blog/category/pageList',function(req, res) {
     prepare(req, res);
     res.json(Mock.mock({
@@ -56,6 +79,7 @@ app.use('/blog/category/pageList',function(req, res) {
     }))
 });
 
+//获取标签 pageNo:   PageSize:
 app.use('/blog/tag/pageList',function(req, res) {
     prepare(req, res);
     res.json(Mock.mock({
@@ -66,19 +90,7 @@ app.use('/blog/tag/pageList',function(req, res) {
     }))
 });
 
-app.use('/blog/article/list',function(req, res) {
-    prepare(req, res);
-    res.json(Mock.mock({
-        'status': 200,
-        'dataSource|1-9':[{
-            'key|+1': 1,
-            'title|1':['肆无忌惮', '称王称霸', '那个男人'],
-            'content|1': ['这是博客内容', 'this is blog content', '疑信参半 却无比期盼', '你的惯犯 圆满', '别让纠缠 显得 孤单'],
-            'mockAction|1': ['下载', '试听', '喜欢']
-        }]
-    }))
-});
-
+//获取文章内容  id:  userId:
 app.use('/blog/article/queryById', function(req, res) {
     prepare(req, res);
     res.json(Mock.mock({
@@ -98,7 +110,7 @@ app.use('/blog/article/queryById', function(req, res) {
     }))
 });
 
-
+//获取评论列表  articleId
 app.use('/blog/comment/list', function(req, res) {
     prepare(req, res);
     res.json(Mock.mock({
