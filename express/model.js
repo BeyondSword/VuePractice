@@ -1,4 +1,5 @@
 // import Mock from 'mockjs';
+const post = require("./post.js");
 let Post = require("./post.js");
 
 let tags = ['tag0', 'tag1', 'tag2', 'tag3', 'tag4', 'tag5', 'tag6', 'tag7', 'tag8', 'tag9'];
@@ -19,7 +20,9 @@ function insert(data) {
 }
 
 //查询
-
+function queryById(id){
+    post.
+}
 
 //查询并更新
 function update(wherestr, updatestr){
