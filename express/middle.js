@@ -1,10 +1,11 @@
+const model = require('./model.js');
+
 //根据 ID 查找文章
-exports.article = (req, res) => {
-    let id = req.param('id');
-    if (id < 0) {
-        // 错误处理404 找不到
-    }
-    res.json(queryById(id));
+exports.article = async (req, res) => {
+    let objId = req.param('id');
+    console.log("objId:", objId);
+    let foo = await model.getPostById(objId);
+    res.json({result:foo});
 }
 
 //根据 ID 找评论
@@ -14,8 +15,8 @@ exports.comments = (req, res) => {
 
 //根据 category 找文章列表
 exports.listByCat = (req, res) => {
-    let pageSize = req.param('pageSize');
-    let pageNo = req.param('pageNo');
+    let pageSize = req.params('pageSize');
+    let pageNo = req.params('pageNo');
     res.json(getListByCat());
 }
 

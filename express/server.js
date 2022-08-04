@@ -5,14 +5,17 @@ const express = require('express');
 const middle = require('./middle')
 
 let app = express();
+
 //跨域处理
-router.use((req, res, next) => {
+app.use((req, res, next) => {
+  console.log(req.path);
   res.header("Access-Control-Allow-Origin", "*");
   res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, accessToken, token, x-access-token",);
+  next();
 })
 
-app.get('/blog/article/queryById', middle.article);
+app.get('/blog/article', middle.article);
 app.get('/blog/article/pageListWithDetails', middle.listDetail);
 app.get('/blog/article/list', middle.listAll);
 app.get('/blog/category/pageList', middle.listByCat)
@@ -24,5 +27,5 @@ app.get('/blog/comment/list', middle.comments);
 
 // 监听
 app.listen(8090, () => {
-  console.log('Express started on port 3000');
+    console.log('Express started on port 8090');
 });
