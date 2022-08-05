@@ -16,14 +16,14 @@ app.use((req, res, next) => {
 })
 
 app.get('/blog/article', middle.article);
-app.get('/blog/article/pageListWithDetails', middle.listDetail);
-app.get('/blog/article/list', middle.listAll);
-app.get('/blog/category/pageList', middle.listByCat)
-app.get('/blog/tag/pageList', middle.listByTag);
-
+// 暂时先弃用
+// app.get('/blog/article/pageListWithDetails', middle.listDetail);
+app.get('/blog/article/list', middle.articles);
+app.get('/blog/category/pageList', middle.articlesByCat);
+app.get('/blog/tag/pageList', middle.articlesByTag);
 app.get('/blog/category/list', middle.categories);
 app.get('/blog/tag/list', middle.tags);
-app.get('/blog/comment/list', middle.comments);
+// app.get('/blog/comment/list', middle.comments);
 
 // 监听
 app.listen(8090, () => {

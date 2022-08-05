@@ -1,1 +1,1 @@
-使用 express + mongoDB + mongoose 实现博客后端。
+使用 express + mongoDB + mongoose 实现个人博客后端。

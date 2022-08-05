@@ -19,47 +19,74 @@
 
 // cate表简化， 只存文章名
 
-let categories =[
-{
-  name: "cat-a",
-  articles: [{name: "t1"}, {"t2"}, "t3"]
-},
-{
-  name: "cat-b",
-  articles: ["t4", "t5"]
-},
-{
-  name: "cat-c",
-  articles: ["t6", "t7"]
-},
-{
-  name: "cat-d",
-  articles: []
-},
-{
-  name: "cat-e",
-  articles: ["t8, t9"]
-}
-];
+// 原始测试数据
+let posts = [
+    {
+      title: '这是标题一',
+      content: '随便写点什么',
+      category: 'cat-a',
+      tagList: [ {name: 'tag-b'}, {name: 'tag-c'} ],
+      likedCount: 100,
+      comment: [{
+        author: 'aa',
+        content: 'bbb',
+        likedCount: 1000
+      },
+      {
+        author: "bb小子",
+        content: 'ssxf',
+        likedCount: 394
+      },
+      {
+        author: "好好好",
+        content: 'xxsdf',
+        likedCount: 203
+      }]
+    },
+    {
+        title: '这是标题二',
+        content: '随便想点什么',
+        category: 'cat-a',
+        tagList: [ {name: 'tag-e'}, {name: 'tag-c'} ],
+        likedCount: 100,
+        comment: [{
+          author: '小明',
+          content: 'bbbbbb',
+          likedCount: 400
+        }]
+    },
+    {
+        title: 't3',
+        content: '随便说点什么',
+        category: 'cat-b',
+        tagList: [ {name: 'tag-a'}, {name: 'tag-c'}, {name: 'tag-d'} ],
+        likedCount: 100,
+        comment: []
+    },
+    {
+        title: '不知道取什么名字',
+        content: '随便做点什么',
+        category: 'cat-b',
+        tagList: [ {name: 'tag-b'}, {name: 'tag-d'} ],
+        likedCount: 100,
+        comment: [{
+          author: 'aa',
+          content: '这里什么都没有',
+          likedCount: 1000
+        }]
+    },
+    {
+        title: '不知道取什么名字x2',
+        content: '随便做点什么',
+        category: 'ccar',
+        tagList: [ {name: 'tag-b'}, {name: 'tag-d'} ],
+        likedCount: 100,
+        comment: [{
+          author: 'aa',
+          content: '这里什么都没有',
+          likedCount: 1000
+        }]
+    }
+]
 
-//tag直接查全表解决，因为与文章多对多，更新会比较麻烦
-
-
-let single =
-{
-  title: 't1',
-  content: '随便写点什么',
-  category: 'cat-a',
-  tagList: [ 'tag-b', 'tag-c' ],
-  likedCount: 100,
-  comment: [{
-    author: 'aa',
-    content: 'bbb',
-    likedCount: 1000
-  },
-  {
-    author: "bb小子",
-    content: 'ssxf',
-    likedCount: 394
-  }]
-};
+module.exports = posts;

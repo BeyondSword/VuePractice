@@ -15,7 +15,10 @@ var PostSchema = new Schema({
         content: String,
         likedCount: Number
     }],
-    createTime: {Date}
+    createTime: {Date},
+    modifiedTime: {Date},
+}, {
+    strictQuery: true
 });
 
 module.exports = mongoose.model('Post', PostSchema);

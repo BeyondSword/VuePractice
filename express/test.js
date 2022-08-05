@@ -1,26 +1,99 @@
+//生成测试数据
+
 const model = require('./model.js');
-const mongoose = require('mongoose');
+const posts = require('./testcase/post')
 
-// let obj = new mongoose.Types.ObjectId("62ea5ead6adb2fe79a286968");
-// console.log(model.getPostById(obj));
+//根据 posts 生成所有 tags 并插入数据库
+let genTags = (posts) => {
+    let tags = [];
+    let set = new Set(); // 去重
+    posts.forEach(element => {
+        element.tagList.forEach(ele => {
+            set.add(ele.name);
+        });
+    });
 
-let single =
-{
-  title: 't1',
-  content: '随便写点什么',
-  category: 'cat-a',
-  tagList: [ {name: 'tag-b'}, {name: 'tag-c'} ],
-  likedCount: 100,
-  comment: [{
-    author: 'aa',
-    content: 'bbb',
-    likedCount: 1000
-  },
-  {
-    author: "bb小子",
-    content: 'ssxf',
-    likedCount: 394
-  }]
-};
+    set.forEach(tagName => {
+        let tag = {
+            name: tagName,
+            lists: []
+        };
 
-model.insert(single);
+        posts.forEach(post => {
+            if (post.tagList.some(ele => {
+                return ele.name === tagName;
+            })) {
+                tag.lists.push({title: post.title});
+            }
+        })
+
+        tags.push(tag);
+    })
+
+    // console.log('%j', tags);
+    return tags;
+}
+
+//根据 posts 生成所有的 categories 并入库
+let genCats = (posts) => {
+    let cats = [];
+    let set = new Set();
+    posts.forEach(element => {
+        set.add(element.category);
+    });
+
+    set.forEach(catName => {
+        let cat = {
+            name: catName,
+            lists: []
+        };
+
+        posts.forEach(post => {
+            if (post.category === catName) {
+                cat.lists.push({title: post.title});
+            }
+        })
+
+        cats.push(cat);
+    })
+
+    console.log('%j', cats);
+    return cats;
+}
+
+const test_getPostByName = async () => {
+    const raw = await model.getPostByTitle('t1');
+    console.log(raw);
+}
+
+const test_getPostsByTag = async () => {
+    const res = await model.getPostsByTag('tag-c');
+    console.log(res);
+}
+
+const test_getPostsByCat = async () => {
+    const res = await model.getPostsByCat('cat-a');
+    console.log(res);
+}
+
+//测试插入
+const testInsert = async () => {
+    await model.removeAll();//删除所有表
+
+    posts.map((post)=>{
+        model.insertPost(post);
+    });
+
+    let tags = genTags(posts);
+    tags.map(tag => {
+        model.insertTag(tag);
+    });
+
+    let cats = genCats(posts);
+    cats.map(cat => {
+        model.insertCategory(cat);
+    })
+}
+
+testInsert();
+

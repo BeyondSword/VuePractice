@@ -1,10 +1,23 @@
 // import Mock from 'mockjs';
-let Post = require("./schema/post.js");
+
+//schemaes
+let Post = require("./schema/post");
+let Category = require("./schema/category")
+let Tag = require("./schema/tag")
+
 const db = require("./db.js");
 const mongoose = require('mongoose');
 
-//插入
-exports.insert = (data) => {
+exports.removeAll = async () => {
+    console.log("deleting...");
+    await Post.deleteMany();
+    await Category.deleteMany();
+    await Tag.deleteMany();
+    console.log(await Tag.count());
+}
+
+//插入文章
+exports.insertPost = (data) => {
     var post = new Post(data);
     post.save(function (err, res) {
         if (err) {
@@ -16,9 +29,42 @@ exports.insert = (data) => {
     });
 }
 
+//插入类别
+exports.insertCategory = (data) => {
+    var cat = new Category(data);
+    cat.save(function (err, res) {
+        if (err) {
+            console.log("Error:" + err);
+        }
+        else {
+            console.log("Res:" + res);
+        }
+    });
+}
+
+//插入标签
+exports.insertTag = (data) => {
+    var tag = new Tag(data);
+    tag.save(function (err, res) {
+        if (err) {
+            console.log("Error:" + err);
+        }
+        else {
+            console.log("Res:" + res);
+        }
+    });
+}
+
+
 //根据id查询指定文章
 exports.getPostById = async (objId) => {
     const raw = await Post.findById(objId);
+    return raw;
+}
+
+//根据name查询文章
+exports.getPostByTitle = async (name) => {
+    const raw = await Post.findOne({title:name});
     return raw;
 }
 
@@ -34,86 +80,62 @@ exports.getPostById = async (objId) => {
 //     console(raw);
 // }
 
+// 根据tag查询文章列表,显示缩略结果
+exports.getPostsByTag = async (tag, pageNo, pageSize) => {
+    const query = await Post.find(
+        {
+            tagList: { $elemMatch: {name:tag}}
+        },
+        {
+            content: 0, comment: 0, tagList:{_id: 0}
+        },
+        {
+            skip: (pageNo-1)*pageSize, limit: pageSize
+        }
+    ).exec();
+
+    return query;
+}
+
+// 根据category查询文章列表,显示缩略结果
+exports.getPostsByCat = async (cat, pageNo, pageSize) => {
+    const query = await Post.find(
+        {
+            category: cat
+        },
+        {
+            content: 0, comment: 0, tagList:{_id: 0}
+        },
+        {
+            skip: (pageNo-1)*pageSize, limit: pageSize
+        }
+    ).exec();
+
+    return query;
+}
+
+// 全表查询
+exports.getPostsAll = async (pageNo, pageSize) => {
+    const query = await Post.find(
+        null,
+        {
+            content: 0, comment: 0, tagList:{_id: 0}
+        },
+        {
+            skip: (pageNo-1)*pageSize, limit: pageSize
+        }
+    ).exec();
+
+    return query;
+}
 
 
-// exports.getPostsByCat = (cat) => {
-//     const raw = await Post.find
-// }
+exports.getCategories = async (pageNo, pageSize) => {
+    const query = await Category.find().exec();
+    return query;
+}
 
-
-
-// //查询并更新
-// function update(wherestr, updatestr){
-//     Post.update(wherestr, updatestr, function(err, res){
-//         if (err) {
-//             console.log("Error:" + err);
-//         }
-//         else {
-//             console.log("Res:" + res);
-//         }
-//     })
-// }
-
-// var User = require("./user.js");
-
-// // 根据id进行更新
-// function findByIdAndUpdate(id, updatestr){
-//     var id = '56f2558b2dd74855a345edb2';
-//     var updatestr = {'userpwd': 'abcd'};
-
-//     Post.findByIdAndUpdate(id, updatestr, function(err, res){
-//         if (err) {
-//             console.log("Error:" + err);
-//         }
-//         else {
-//             console.log("Res:" + res);
-//         }
-//     })
-// }
-
-// //删除
-// function del(){
-//     var wherestr = {'username' : 'Tracy McGrady'};
-
-//     User.remove(wherestr, function(err, res){
-//         if (err) {
-//             console.log("Error:" + err);
-//         }
-//         else {
-//             console.log("Res:" + res);
-//         }
-//     })
-// }
-
-
-// //根据id删除
-
-
-// //条件查询
-// var User = require("./user.js");
-
-// function getByConditions(){
-//     var wherestr = {'username' : 'Tracy McGrady'};
-
-//     User.find(wherestr, function(err, res){
-//         if (err) {
-//             console.log("Error:" + err);
-//         }
-//         else {
-//             console.log("Res:" + res);
-//         }
-//     })
-// }
-
-// let data = {
-//     title: "sssss",
-//     author: "ssss",
-//     content: "xxxxxx",
-//     category: [{ name: "xxx"}, {name: "yyy"}],
-//     tagList: [{ name: "zzz"}, {name: "ooo"}],
-//     likedCount: 100,
-//     comment: [{ index: 10, index: 100}],
-//     createTime: new Date()
-// };
-
-
+exports.getTags = async(pageNo, pageSize) => {
+    const query = await Tag.find().exec();
+    return query;
+}
