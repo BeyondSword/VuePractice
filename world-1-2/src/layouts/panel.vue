@@ -115,20 +115,20 @@ export default {
 
     //获取分类列表
     const getCategoryList = async () => {
-      const res = await getAction("/blog/category/pageList", {
+      const res = await getAction("/blog/category/list", {
         pageNo: 1,
         pageSize: 5,
       });
-      state.categoryList = res.result.records;
+      state.categoryList = res.result;
     };
 
     //获取标签列表
     const getTagList = async () => {
-      const res = await getAction("/blog/tag/pageList", {
+      const res = await getAction("/blog/tag/list", {
         pageNo: 1,
         pageSize: 6,
       });
-      state.tagList = res.result.records;
+      state.tagList = res.result;
     };
 
     //选择热门分类

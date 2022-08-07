@@ -1,5 +1,10 @@
 var mongoose = require('mongoose'),
-    DB_URL = 'mongodb://localhost:27017/webBlog';
+
+// 本地连接
+DB_URL = 'mongodb://localhost:27017/webBlog';
+
+// 远程连接
+// DB_URL =
 
 /**
  * 连接

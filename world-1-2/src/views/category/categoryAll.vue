@@ -1,4 +1,4 @@
-<!-- TODO: bug: 合上唯一一类时会报错, activeKey undefined -->
+<!-- TODO: bug: 合上唯一展开的一类时会报错, activeKey undefined -->
 <template>
   <div class="page_content">
     <a-collapse ghost accordion :bordered="false" v-model:activeKey="activeKey">
@@ -66,8 +66,8 @@ export default defineComponent({
         if (typeof val == 'undefined') {
           return;
         }
-        const categoryId = state.categoryList[val]?.id;
-        getArticleList(categoryId);
+        const catName = state.categoryList[val]?.name;
+        getArticleList(catName);
       }
     );
 
@@ -79,15 +79,15 @@ export default defineComponent({
     };
 
     //获取文章列表
-    const getArticleList = async (categoryId) => {
+    const getArticleList = async (catName) => {
       // console.log(state.categoryList);
       const targetCategory = state.categoryList.find(
-        (item) => item.id == categoryId
+        (item) => item.name == catName
       );
       console.log("targetCategory", targetCategory);
       targetCategory.loading = true;
-      const res = await getAction("/blog/article/list", {
-        categoryId,
+      const res = await getAction("/blog/category/pageList", {
+        cat: catName,
         status: 1,
       });
       targetCategory.articleList = res.result;
@@ -96,7 +96,7 @@ export default defineComponent({
     };
 
     const handleGoArticle = (item) => {
-      router.push({ path: "/article", query: { id: item.id } });
+      router.push({ path: "/article", query: { id: item.title } });
     };
 
     return {

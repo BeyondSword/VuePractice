@@ -83,7 +83,7 @@ export default defineComponent({
     };
 
     const handleGoArticle = (item) => {
-      router.push({ path: "/article", query: { id: item.id } });
+      router.push({ path: "/article", query: { id: item.title } });
     };
 
     return {

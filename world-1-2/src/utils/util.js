@@ -1,3 +1,4 @@
+// 转换时间的格式
 export const getTimer = (stringTime) => {
     let minute = 1000 * 60;
     let hour = minute * 60;

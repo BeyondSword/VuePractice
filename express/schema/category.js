@@ -6,6 +6,7 @@ var CategorySchema = new Schema({
         type: String,
         unique: true
     },
+    articleCount: Number,
     lists: [{
         title: String
     }],

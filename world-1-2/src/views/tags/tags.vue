@@ -66,18 +66,21 @@ export default {
 
     //获取文章列表
     const getArticleList = async () => {
-      const res = await getAction("/blog/article/pageListWithTags", {
+      console.log("tag:", state.tagName);
+      const res = await getAction("/blog/tag/pageList", {
         pageSize: 10,
         pageNo: 1,
-        tagId: state.tagId,
+        tag: state.tagName,
         status: 1,
       });
-      state.total = res.result.total;
-      state.articleList = res.result.records;
+      console.log(res.result);
+      state.articleList = res.result;
+      console.log(state.articleList);
+      state.total = state.articleList.length;
     };
 
     const handleGoArticle = (item) => {
-      router.push({ path: "/article", query: { id: item.id } });
+      router.push({ path: "/article", query: { id: item.title } });
     };
 
     return {

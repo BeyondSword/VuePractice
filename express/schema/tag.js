@@ -6,6 +6,7 @@ var TagSchema = new Schema({
         type: String,
         unique: true
     },
+    articleCount: Number,
     lists: [{
         title: String
     }],

@@ -7,16 +7,19 @@ var PostSchema = new Schema({
     title: String,
     author: String,
     content: String,
+    intro: String,
     category: String,
     tagList: [{ name: String }],
+    viewCount: Number,
     likedCount: Number,
+    commentCount: Number,
+    createTime: Date,
+    modifiedTime: Date,
     comment: [{
         author: String,
         content: String,
         likedCount: Number
     }],
-    createTime: {Date},
-    modifiedTime: {Date},
 }, {
     strictQuery: true
 });

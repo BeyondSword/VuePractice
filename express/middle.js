@@ -15,7 +15,7 @@ exports.article = async (req, res) => {
     let title = req.param('title');
     if (title) {
         let raw = await model.getPostByTitle(title);
-        res.json({result:raw});
+        res.json({result:raw, code:200});
     }
     //404 not found
 }
@@ -27,7 +27,7 @@ exports.articlesByTag = async (req, res) => {
     let pageSize = req.param('pageSize');
     if (tag) {
         let raw = await model.getPostsByTag(tag, pageNo, pageSize);
-        res.json({result:raw});
+        res.json({result:raw, code:200});
     }
 }
 
@@ -38,7 +38,10 @@ exports.articlesByCat = async (req, res) => {
     let pageSize = req.param('pageSize');
     if (cat) {
         let raw = await model.getPostsByCat(cat, pageNo, pageSize);
-        res.json({result:raw});
+        res.json({
+                result:raw,
+                code: 200
+                });
     }
 }
 
@@ -47,18 +50,22 @@ exports.articles = async (req, res) => {
     let pageNo = req.param('pageNo');
     let pageSize = req.param('pageSize');
     let raw = await model.getPostsAll(pageNo, pageSize);
-    res.json({result:raw});
+    res.json({result:raw, code:200});
 }
 
 //获取所有category
 exports.categories = async (req, res) => {
     let raw = await model.getCategories();
-    res.json({result:raw});
+    // raw.map((cat) => {
+    //     cat.articleCount = cat.lists.length;
+    // })
+    console.log(raw);
+    res.json({result:raw, code:200});
 }
 
 //获取所有tags
 exports.tags = async (req, res) => {
     let raw = await model.getTags();
-    res.json({result:raw});
+    res.json({result:raw, code:200});
 }
 

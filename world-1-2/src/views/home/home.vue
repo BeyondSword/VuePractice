@@ -19,7 +19,7 @@
               </span>
               <span>
                 <LikeOutlined style="margin-right: 8px" />
-                <span>{{ item.likeCount }}</span>
+                <span>{{ item.likedCount }}</span>
               </span>
               <span>
                 <MessageOutlined style="margin-right: 8px" />
@@ -83,7 +83,7 @@ export default defineComponent({
     //获取文章列表
     const getArticleList = async () => {
       state.isLoading = true;
-      const res = await getAction("/blog/article/pageListWithTags", {
+      const res = await getAction("/blog/article/list", {
         pageSize: state.pagination.pageSize,
         pageNo: state.pagination.pageNo,
         title: state.searchKey,
@@ -91,8 +91,8 @@ export default defineComponent({
       });
 
       console.log("res", res);
-      state.dataSource = res.result.records;
-      state.pagination.total = res.result.total;
+      state.dataSource = res.result;
+      state.pagination.total = res.result.length;
       state.isLoading = false;
     };
 
@@ -103,7 +103,7 @@ export default defineComponent({
 
     // 等价于<router-link :to="...">
     const handleGoArticle = (item) => {
-      router.push({ path: "/article", query: { id: item.id } });
+      router.push({ path: "/article", query: { id: item.title } });
     };
 
     return {

@@ -7,7 +7,7 @@
       <div class="desc_wrap">
         <div class="item">
           <div><user-outlined /></div>
-          <div>{{ articleDetail.createBy }}</div>
+          <div>{{ articleDetail.author }}</div>
         </div>
         <div class="item">
           <div><clock-circle-outlined /></div>
@@ -45,7 +45,7 @@
         </div>
         <div class="value">
           <div class="category" @click="handleCategoryClick">
-            {{ articleDetail.categoryName }}
+            {{ articleDetail.category }}
           </div>
         </div>
       </div>
@@ -73,7 +73,7 @@
             <a-list-item>
               <a-comment>
                 <template #author
-                  ><a>{{ item.createBy }}</a></template
+                  ><a>{{ item.author }}</a></template
                 >
                 <template #avatar>
                   <a-avatar
@@ -85,7 +85,7 @@
                     src=""
                     alt="头像"
                   >
-                    {{ item?.createBy ? item.createBy.slice(-2) : "匿名" }}
+                    {{ item?.author ? item.author.slice(-2) : "匿名" }}
                   </a-avatar>
                 </template>
                 <template #content> {{ item.content }} </template>
@@ -153,7 +153,7 @@ export default {
     const articleRef = ref();
 
     const state = reactive({
-      articleId: route.query.id,
+      articleName: route.query.id,
       articleDetail: {
         id: "",
         title: "",
@@ -175,7 +175,7 @@ export default {
     watch(
       () => route.path,
       () => {
-        state.articleId = route.query.id;
+        state.articleName = route.query.id;
       }
     );
 
@@ -185,28 +185,31 @@ export default {
     });
 
     const initPageData = () => {
-      state.articleId = route.query.id;
+      state.articleName = route.query.id;
+      console.log("route.query.id:", route.query.id);
       getArticleDetail();
-      getCommentList();
+      // getCommentList(); 单次查询同时获得评论
     };
 
     //获取文章详情
     const getArticleDetail = async () => {
       const params = {
-        id: state.articleId,
+        title: state.articleName,
         userId: state.userInfo?.id,
       };
-      const res = await getAction("/blog/article/queryById", params);
+      const res = await getAction("/blog/article", params);
       state.articleDetail = res.result;
       state.isLoadingByArticle = false;
       nextTick(() => {
         store.dispatch("setArticleTitles", articleRef.value);
       });
+      state.commentList = state.articleDetail.comment;
+      console.log("comment:", state.articleDetail.comment);
     };
 
-    //获取评论列表
+    //获取评论列表, 该接口暂时关闭
     const getCommentList = async () => {
-      const params = { articleId: state.articleId };
+      const params = { articleName: state.articleName };
       const res = await getAction("/blog/comment/list", params);
       state.commentList = res.result;
     };
@@ -252,7 +255,7 @@ export default {
 
     const handleCommentAdd = async () => {
       const params = {
-        articleId: state.articleDetail.id,
+        articleName: state.articleDetail.title,
         content: state.commentValue,
       };
       const res = await postAction("/blog/comment/add", params);

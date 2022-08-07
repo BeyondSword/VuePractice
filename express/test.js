@@ -27,6 +27,7 @@ let genTags = (posts) => {
             }
         })
 
+        tag.articleCount = tag.lists.length;
         tags.push(tag);
     })
 
@@ -54,6 +55,7 @@ let genCats = (posts) => {
             }
         })
 
+        cat.articleCount = cat.lists.length;
         cats.push(cat);
     })
 
@@ -80,7 +82,10 @@ const test_getPostsByCat = async () => {
 const testInsert = async () => {
     await model.removeAll();//删除所有表
 
+    console.log(posts);
     posts.map((post)=>{
+        post.commentCount = post.comment.length;
+        post.intro = post.content.slice(0, 10);
         model.insertPost(post);
     });
 
