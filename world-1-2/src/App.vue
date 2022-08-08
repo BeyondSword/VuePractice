@@ -11,6 +11,7 @@
   </router-view>
 </template>
 
+<!-- router-view实现两次重定向 -->
 <script>
 import { onMounted } from "vue";
 import { useRoute } from "vue-router";

@@ -1,94 +1,17 @@
+
 <template>
-  <div class="basic_layout" :class="isSideShow ? 'sider_show' : 'sider_hidden'">
-    <div class="topbar_wrap">
-      <!-- pc端 面包屑导航 -->
-      <Breadcrumb class="bread_crumb_web" :breadcrumbList="breadcrumbList" />
-
-      <!-- 移动端 切换菜单-->
-      <menu-outlined
-        class="menu_trigger_mobile"
-        @click="isSideShow = !isSideShow"
-      />
-
-      <!-- 移动端 搜索-->
-      <div v-show="isSearchBoxShow" class="search_container_mobile">
-        <a-input
-          class="input_search"
-          placeholder="输入关键字搜索"
-          :value="searchValue"
-          @pressEnter="handleSearchConfirm"
-          @change="handleSearchChange"
-        >
-          <template #prefix>
-            <search-outlined
-              style="color: #333333; cursor: pointer"
-              @click="handleSearchConfirm"
-            />
-          </template>
-        </a-input>
-        <a-button type="link" @click="handleSearchBoxHide">取消</a-button>
-      </div>
-
-      <!-- 移动端 页面标题-->
-      <div class="title_mobile">{{ curNavTitle }}</div>
-
-      <!-- 移动端 切换搜索-->
-      <div v-show="!isSearchBoxShow" class="search_trigger_mobile">
-        <search-outlined
-          style="color: #555555; cursor: pointer; font-size: 18px"
-          @click="handleSearchBoxShow"
-        />
-      </div>
-
-      <!-- pc端 -->
-      <a-input
-        class="input_search_web"
-        style="width: 18%"
-        placeholder="输入关键字搜索"
-        allowClear
-        :value="searchValue"
-        @pressEnter="handleSearchConfirm"
-        @change="handleSearchChange"
-      >
-        <template #prefix>
-          <search-outlined
-            style="color: #333333; cursor: pointer"
-            @click="handleSearchConfirm"
-          />
-        </template>
-      </a-input>
-    </div>
-
-    <Sider
-      :menuList="menuList"
-      :selectedKey="selectedKey"
-      @onClick="handleMenuClick"
-    />
-
-    <div class="main_wrapper">
-      <a-row style="width: 100%; height: 100%">
-        <a-col :xs="24" :sm="24" :md="18" :lg="18">
-          <div class="page">
-            <transition name="fade">
-              <router-view />
-            </transition>
-          </div>
-        </a-col>
-        <a-col :xs="0" :sm="0" :md="6" :lg="6"><Panel /></a-col>
-      </a-row>
-    </div>
-
-    <div class="mask" @click="isSideShow = false"></div>
-
-    <a-back-top>
-      <div class="backTop_wrapper">
-        <arrow-up-outlined
-          style="color: #ffffff; font-size: 20px; font-weight: bolder"
-        />
-      </div>
-    </a-back-top>
-  </div>
+  <a-layout>
+    <Sider></Sider>
+    <a-layout>
+      <a-layout-header>Header</a-layout-header>
+      <a-layout-content>
+        <router-view/>
+      </a-layout-content>
+      <a-layout-footer>Footer</a-layout-footer>
+    </a-layout>
+  </a-layout>
 </template>
+
 <script>
 import {
   defineComponent,
@@ -220,155 +143,43 @@ export default defineComponent({
   },
 });
 </script>
-<style lang="less">
-.basic_layout {
-  display: flex;
-  width: 100%;
-  height: 100%;
-  &.sider_show {
-    .siderBar {
-      transform: translateX(0px);
-      -webkit-transform: translateX(0px);
-    }
-    .topbar_wrap,
-    .main_wrapper {
-      transform: translateX(260px);
-      -webkit-transform: translateX(260px);
-    }
-    .mask {
-      display: block;
-    }
-  }
-  .topbar_wrap {
-    position: relative;
-    display: flex;
-    width: 100%;
-    height: 50px;
-    padding: 0 20px 0 10px;
-    align-items: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 50;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.07);
-    background: #ffffff;
-    transition: transform 0.4s ease;
-    -webkit-transition: transform 0.4s ease;
-    justify-content: space-between;
-    .bread_crumb_web {
-      display: none;
-    }
-    .menu_trigger_mobile {
-      display: block;
-      cursor: pointer;
-    }
-    .title_mobile {
-      display: block;
-    }
-    .search_container_mobile {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      padding: 0 10px;
-      background: #ffffff;
-      .input_search {
-        border-radius: 16px;
-        width: 85%;
-      }
-      .ant-btn-link {
-        color: #2e9dd2;
-      }
-    }
-    .input_search_web {
-      margin-left: auto;
-      border-radius: 16px;
-      display: none;
-    }
-    .search_wrap_mobile {
-      width: 100%;
-    }
-  }
-  .main_wrapper {
-    width: 100%;
-    padding-top: 50px;
-    transition: transform 0.4s ease;
-    -webkit-transition: transform 0.4s ease;
-    .page {
-      padding: 10px 5px;
-    }
-  }
-  .mask {
-    display: none;
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    z-index: 1;
-  }
-  .backTop_wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 42px;
-    height: 42px;
-    box-shadow: 0 0 1px #2e9dd2;
-    opacity: 0.35;
-    border-radius: 50%;
-    background: #2e9dd2;
-  }
-}
-@media (min-width: 831px) {
-  .basic_layout {
-    .topbar_wrap,
-    .main_wrapper {
-      width: calc(100% - 260px);
-      transform: translateX(260px);
-      -webkit-transform: translateX(260px);
-    }
-    .topbar_wrap {
-      .bread_crumb_web {
-        display: block;
-      }
-      .menu_trigger_mobile {
-        display: none;
-      }
-      .title_mobile {
-        display: none;
-      }
-      .input_search_web {
-        display: inline-flex;
-      }
-      .search_trigger_mobile {
-        display: none;
-      }
-    }
-  }
-}
-@media (max-width: 831px) {
-  .basic_layout {
-    overflow-x: hidden;
-  }
-}
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s ease 0s;
-}
 
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
+<style>
+#components-layout-demo-basic .code-box-demo {
+  text-align: center;
 }
-
-.fade-leave-from,
-.fade-enter-to {
-  opacity: 1;
+#components-layout-demo-basic .ant-layout-header,
+#components-layout-demo-basic .ant-layout-footer {
+  color: #fff;
+  background: #7dbcea;
+}
+[data-theme='dark'] #components-layout-demo-basic .ant-layout-header {
+  background: #6aa0c7;
+}
+[data-theme='dark'] #components-layout-demo-basic .ant-layout-footer {
+  background: #6aa0c7;
+}
+#components-layout-demo-basic .ant-layout-footer {
+  line-height: 1.5;
+}
+#components-layout-demo-basic .ant-layout-sider {
+  color: #fff;
+  line-height: 120px;
+  background: #3ba0e9;
+}
+[data-theme='dark'] #components-layout-demo-basic .ant-layout-sider {
+  background: #3499ec;
+}
+#components-layout-demo-basic .ant-layout-content {
+  min-height: 120px;
+  color: #fff;
+  line-height: 120px;
+  background: rgba(16, 142, 233, 1);
+}
+[data-theme='dark'] #components-layout-demo-basic .ant-layout-content {
+  background: #107bcb;
+}
+#components-layout-demo-basic > .code-box-demo > .ant-layout + .ant-layout {
+  margin-top: 48px;
 }
 </style>
