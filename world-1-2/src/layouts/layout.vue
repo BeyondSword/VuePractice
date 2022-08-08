@@ -1,7 +1,8 @@
 
 <template>
   <a-layout>
-    <Sider></Sider>
+    <!-- <a-layout-sider><Sider/></a-layout-sider> -->
+    <a-layout-sider><Sider/></a-layout-sider>
     <a-layout>
       <a-layout-header>Header</a-layout-header>
       <a-layout-content>

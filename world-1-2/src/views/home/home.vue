@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div class="page_content">
     <a-spin size="large" :spinning="isLoading">
       <a-list
@@ -40,7 +40,23 @@
       </a-list>
     </a-spin>
   </div>
+</template> -->
+<template>
+	<div class="box box-23">
+		<div class="box-item grow">1 <div>flex-grow: 1</div></div>
+		<div class="box-item grow grow-2">
+        <a-typography-text
+        :style="ellipsis ? { width: '100px' } : {}"
+        :ellipsis="ellipsis ? { tooltip: 'I am ellipsis now!' } : false"
+        content="Ant Design, a design language for background applications, is refined by Ant UED Team."
+        />
+    </div>
+		<div class="box-item grow">3 <div>flex-grow: 1</div></div>
+	</div>
 </template>
+
+
+
 
 <script>
 import { getAction } from "@/request/manage";
@@ -114,27 +130,19 @@ export default defineComponent({
 });
 </script>
 
-<style lang="less" scoped>
-.page_content {
-  padding: 10px 5%;
-  :deep(.ant-list-item) {
-    cursor: pointer;
-    transition: all 0.3s;
-    &:hover {
-      background-color: rgba(206, 226, 246, 0.2);
-      box-shadow: 0 0 15px rgba(206, 226, 246, 0.2);
-    }
-    .ant-list-item-meta-title > a {
-      color: #2e9dd2;
-    }
-  }
-  .ant-list-empty-text {
-    padding: 40px 0;
-  }
-  .ant-list-pagination {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-  }
+<style>
+.box {
+	background-color: white;
+	margin: 0 0 55px;
+	display: flex;
+
+}
+.box-23 .box-item{
+	flex-grow: 1;
+	width: auto;
+}
+.box-23	.grow-2 {
+	flex-grow: 2;
 }
 </style>
+
