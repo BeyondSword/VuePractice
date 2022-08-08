@@ -1,63 +1,50 @@
 <template>
-  <div class="page_content">
-    <a-spin size="large" :spinning="isLoading">
-      <a-list
-        item-layout="vertical"
-        size="large"
-        :pagination="
-          pagination.total > pagination.pageSize ? pagination : false
-        "
-        :data-source="dataSource"
-        :locale="{ emptyText: '暂无内容' }"
-      >
-        <template #renderItem="{ item }">
-          <a-list-item key="item.title" @click="handleGoArticle(item)">
-            <template #actions>
-              <span>
-                <EyeOutlined style="margin-right: 8px" />
-                <span>{{ item.viewCount }}</span>
-              </span>
-              <span>
-                <LikeOutlined style="margin-right: 8px" />
-                <span>{{ item.likedCount }}</span>
-              </span>
-              <span>
-                <MessageOutlined style="margin-right: 8px" />
-                <span>{{ item.commentCount }}</span>
-              </span>
-            </template>
-            <template v-if="item.cover" #extra>
-              <img width="272" alt="logo" src="" />
-            </template>
-            <a-list-item-meta :description="item.createTime">
-              <template #title>
-                <a :href="item.href">{{ item.title }}</a>
-              </template>
-            </a-list-item-meta>
-            {{ `${item.intro}..` }}
-          </a-list-item>
-        </template>
-      </a-list>
-    </a-spin>
-  </div>
+  <n-list bordered v-for="post in dataSource">
+    <n-list-item>
+    <n-space vertical size="large">
+        <n-layout has-sider>
+        <n-layout-sider content-style="padding: 24px;">
+        </n-layout-sider>
+        <n-layout>
+                <n-space justify="center">
+                    <n-text strong>
+                        {{post.title}}
+                    </n-text>
+                </n-space>
+                <n-space justify="center">
+                    aa<n-divider vertical />bb<n-divider vertical />cc
+                </n-space>
+                <n-space justify="center">
+                    选择了 mongodb 作为博客的后端数据库， 通过 mongoose 进行 CRUD。
+                    试用了阿里云服务器(1个月)，配置 mongodb(尚未完成)。
+                    原主要页面的前后端已经打通(数据库生成假数据)。
+                    接下来的计划：
+                    页面布局选型，在现有基础上进行改造和优化，进行ui框架选型（可能沿用ant-design-vue）。
+                    博文的展示， markdown的渲染问题，以及数据库的存储方式。
+                    实现用户登录功能（鉴权等）。
+                    （登陆后）在线进行博客的编写。
+                    服务器网站部署。
+                </n-space>
+        </n-layout>
+        <n-layout-sider content-style="padding: 24px;">
+        </n-layout-sider>
+        </n-layout>
+    </n-space>
+    </n-list-item>
+  </n-list>
 </template>
 
 <script>
 import { getAction } from "@/request/manage";
 import { defineComponent, onMounted, reactive, toRefs } from "vue";
 import { useRouter } from "vue-router";
-import {
-  LikeOutlined,
-  EyeOutlined,
-  MessageOutlined,
-} from "@ant-design/icons-vue";
+import { GameControllerOutline, GameController } from '@vicons/ionicons5'
 
 export default defineComponent({
   name: "home",
   components: {
-    LikeOutlined,
-    EyeOutlined,
-    MessageOutlined,
+    GameController,
+    GameControllerOutline
   },
   setup() {
     const router = useRouter();
@@ -114,27 +101,8 @@ export default defineComponent({
 });
 </script>
 
-<style lang="less" scoped>
-.page_content {
-  padding: 10px 5%;
-  :deep(.ant-list-item) {
-    cursor: pointer;
-    transition: all 0.3s;
-    &:hover {
-      background-color: rgba(206, 226, 246, 0.2);
-      box-shadow: 0 0 15px rgba(206, 226, 246, 0.2);
-    }
-    .ant-list-item-meta-title > a {
-      color: #2e9dd2;
-    }
-  }
-  .ant-list-empty-text {
-    padding: 40px 0;
-  }
-  .ant-list-pagination {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-  }
+<style scoped>
+.n-text {
+  font-size: 40px;
 }
 </style>
