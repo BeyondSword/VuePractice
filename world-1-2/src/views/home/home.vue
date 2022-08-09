@@ -41,20 +41,22 @@
     </a-spin>
   </div>
 </template> -->
-<template>
+<!-- <template>
 	<div class="box box-23">
 		<div class="box-item grow">1 <div>flex-grow: 1</div></div>
 		<div class="box-item grow grow-2">
-        <a-typography-text
-        :style="ellipsis ? { width: '100px' } : {}"
-        :ellipsis="ellipsis ? { tooltip: 'I am ellipsis now!' } : false"
-        content="Ant Design, a design language for background applications, is refined by Ant UED Team."
-        />
-    </div>
+            <Front/>
+        </div>
 		<div class="box-item grow">3 <div>flex-grow: 1</div></div>
 	</div>
+</template> -->
+<template>
+  <div class="box box-23" >
+    <div v-for="post in dataSource">
+      <Front :post="post"/>
+    </div>
+  </div>
 </template>
-
 
 
 
@@ -67,6 +69,7 @@ import {
   EyeOutlined,
   MessageOutlined,
 } from "@ant-design/icons-vue";
+import Front from "./front.vue"
 
 export default defineComponent({
   name: "home",
@@ -74,6 +77,7 @@ export default defineComponent({
     LikeOutlined,
     EyeOutlined,
     MessageOutlined,
+    Front
   },
   setup() {
     const router = useRouter();
@@ -117,14 +121,9 @@ export default defineComponent({
       getArticleList();
     };
 
-    // 等价于<router-link :to="...">
-    const handleGoArticle = (item) => {
-      router.push({ path: "/article", query: { id: item.title } });
-    };
-
     return {
       ...toRefs(state),
-      handleGoArticle,
+      // handleGoArticle,
     };
   },
 });
@@ -132,17 +131,20 @@ export default defineComponent({
 
 <style>
 .box {
-	background-color: white;
-	margin: 0 0 55px;
+	/* background-color: rgb(235, 235, 235); */
+	/* margin: 0 0 55px; */
+  margin: 0 auto;
+  width: 50%;
 	display: flex;
-
+    height: 100%;
+  flex-direction: column;
 }
-.box-23 .box-item{
+/* .box-23 .box-item{
 	flex-grow: 1;
 	width: auto;
 }
 .box-23	.grow-2 {
 	flex-grow: 2;
-}
+} */
 </style>
 
